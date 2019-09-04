@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+{%load staticfiles%}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block 'title'%} {%endblock%}</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <link rel="stylesheet" href="{%static 'css/bootstrap.min.css'%}">
+    <link rel="stylesheet" href="{%static 'css/style.css'%}">
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+<script type="text/javascript">
+	$(document).ready( function () {
+    $('#table_id').DataTable();
+} );
+</script>
+<script type="text/javascript">
+    function multiply(){
+        pieces=parseInt(purchase.pieces.value);
+        price=parseInt(purchase.price.value);
+        rate=pieces*price;
+        purchase.rate.value=rate;
+    }
+</script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default"style="margin-top: 1%;">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+        {% if request.user.is_authenticated %}
+            <a class="navbar-brand" href="{% url 'index' %}" style="color:#eed369; font-size:20px;">Stock Management System</a>
+        <ul class="nav navbar-nav" style="margin-left:0% !important">
+        <li><a href="{%url 'stock'%}">Stocks </a></li>
+        <li><a href="{% url 'product'%}">Products</a></li>
+        <li><a href="{% url 'customer'%}" class="active">Customers</a></li>
+        <li><a href="{% url 'purchase'%}">Purchases</a></li>
+
+      </ul>
+       {% else %}
+      <a class="navbar-brand" href="#" style="color:#eed369;font-size:20px;">Stock Management System</a>
+        {%endif%}
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav navbar-right">
+
+          {% if request.user.is_authenticated %}
+          <div class="btn-group"style="margin-top: 8%;">
+  <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color:#000000;font-size:14px;">
+    {{user}}
+      <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
+  </button>
+  <div class="dropdown-menu">
+    <a style="margin-left: 55%;color:#000000;" class="dropdown-item" href="{%url 'logout'%}">Logout</a>
+  </div>
+</div>
+          {% else %}
+        <button type="button" class="btn btn-default navbar-btn" onclick="location.href='{%url 'signup'%}';">Signup</button>
+          <button type="button" class="btn btn-default navbar-btn" onclick="location.href='{%url 'login'%}';">Signin</button>
+            {% endif%}
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+{% block 'content' %}
+
+{% endblock %}
+<script src="{% static 'js/bootstrap.min.js'%}"></script>
+<script src="{% static 'bootbox/bootbox.min.js'%}"></script>
+<script src="{% static 'bootbox/bootbox.locales.min.js'%}"></script>
+
+</body>
+</html>

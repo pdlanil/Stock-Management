@@ -1,0 +1,9 @@
+{% if search.count > 0%}
+{% for sch in search %}
+    <li><a href="/search/get/{{sch.id}}/">{{sch.name}}</a> </li>
+{% endfor %}
+
+{% else %}
+<li>No Match Found</li>
+
+{% endif%}
